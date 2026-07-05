@@ -62,11 +62,20 @@ export default function ChatApp() {
       },
       onError: (error) => {
         updateThread(personaId, (msgs) =>
-          msgs.map((m) =>
-            m.id === assistantId
-              ? { ...m, content: error, streaming: false, isError: true }
-              : m
-          )
+          msgs.map((m) => {
+            if (m.id !== assistantId) return m;
+            // If some content already streamed in successfully, keep it and
+            // just append a short inline note rather than wiping the answer.
+            const hasPartialContent = m.content.trim().length > 0;
+            return {
+              ...m,
+              content: hasPartialContent
+                ? `${m.content}\n\n⚠️ ${error}`
+                : error,
+              streaming: false,
+              isError: !hasPartialContent,
+            };
+          })
         );
         setIsStreaming(false);
       },
@@ -77,7 +86,7 @@ export default function ChatApp() {
     <div className="shell">
       <div className="editor">
         <div className="titlebar">
-          <span className="titlebar__label">persona-ai - chat</span>
+          <span className="titlebar__label">persona-ai — chat</span>
         </div>
 
         <PersonaTabs
