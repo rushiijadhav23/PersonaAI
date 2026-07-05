@@ -3,7 +3,7 @@
 An AI-powered chat app that simulates conversations with two Indian coding educators - **Hitesh Choudhary** (Chai aur Code) and **Piyush Garg** - using OpenAI's `gpt-4o-mini` with a persona-engineered system prompt, per-persona conversation context, and real-time streaming responses.
 
 - **Live app**: https://persona-ai-murex.vercel.app
-- **Backend API**: https://personaai-production-b098.up.railway.app
+- **Backend API**: https://personaai-production-7124.up.railway.app
   
 ---
 
