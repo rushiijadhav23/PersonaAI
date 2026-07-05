@@ -5,12 +5,12 @@ import { streamPersonaResponse } from "../services/openai";
 
 const router = Router();
 
-// GET /api/personas — lets the frontend know which personas exist
+// GET /api/personas - lets the frontend know which personas exist
 router.get("/personas", (_req: Request, res: Response) => {
   res.json({ personas: getAvailablePersonas() });
 });
 
-// POST /api/chat — streams a persona response via Server-Sent Events (SSE)
+// POST /api/chat - streams a persona response via Server-Sent Events (SSE)
 router.post("/chat", async (req: Request, res: Response) => {
   const { persona, message, history } = req.body ?? {};
 
@@ -41,7 +41,7 @@ router.post("/chat", async (req: Request, res: Response) => {
     res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
     res.end();
   } catch (err: any) {
-    // Log enough detail to actually diagnose this in Railway's log viewer —
+    // Log enough detail to actually diagnose this in Railway's log viewer -
     // a bare console.error(err) often gets truncated or shows [object Object].
     console.error("Error streaming persona response:", {
       message: err?.message,
@@ -50,7 +50,7 @@ router.post("/chat", async (req: Request, res: Response) => {
       type: err?.type,
       name: err?.name,
     });
-    res.write(`data: ${JSON.stringify({ error: "Something went wrong generating the response." })}\n\n`);
+    res.write(`data: ${JSON.stringify({ error: err?.message })}\n\n`);
     res.end();
   }
 });

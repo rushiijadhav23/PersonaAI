@@ -86,7 +86,7 @@ export default function ChatApp() {
     <div className="shell">
       <div className="editor">
         <div className="titlebar">
-          <span className="titlebar__label">persona-ai — chat</span>
+          <span className="titlebar__label">persona-ai - chat</span>
         </div>
 
         <PersonaTabs
